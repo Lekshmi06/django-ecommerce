@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <form class="form" method="post" action="{%url 'register'%}">
+        {% csrf_token %} 
+        <p class="title">Login </p>
+        {% if error_message %}
+        <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+       
+          
+                
+        <label>
+            <input required="" placeholder="" type="text" name="username" class="input">
+            <span>Username</span>
+        </label> 
+            
+        <label>
+            <input required="" placeholder="" type="password" name="password" class="input">
+            <span>Password</span>
+        </label>
+       
+        <button class="submit" type="submit">Submit</button>
+        <p class="signin">Dont have an account? <a href="{% url 'register' %}">Signup</a> </p>
+    </form>
+
+
+</body>
+</html>

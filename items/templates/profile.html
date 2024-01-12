@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Profile</title>
+</head>
+<body>
+
+<h1>User Profile</h1>
+
+{% if user.is_authenticated %}
+    <h2>Welcome, {{ user.username }}</h2>
+    {% if user.first_name %}
+        <p>First Name: {{ user.first_name }}</p>
+    {% endif %}
+    {% if user.last_name %}
+        <p>Last Name: {{ user.last_name }}</p>
+    {% endif %}
+    {% if user.email %}
+        <p>Email: {{ user.email }}</p>
+    {% endif %}
+    {% if user.dp %}
+        <img src="{{ user.dp.url }}" alt="User Profile Picture" style="max-width: 200px; max-height: 200px;">
+    {% endif %}
+    <!-- Add other user information here -->
+{% else %}
+    <p>Please log in to view your profile.</p>
+{% endif %}
+
+</body>
+</html>

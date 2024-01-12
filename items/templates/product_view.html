@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Products</title>
+    <style>
+        /* Styling for product boxes */
+        .product-box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 10px;
+            width: 300px;
+            /* Add any other styling properties */
+        }
+    </style>
+</head>
+<body>
+    <h1>All Products</h1>
+    <div class="products-container">
+        {% for product in products %}
+        <a href="{% url 'product_detail' pk=product.pk %}">
+            <div class="product-box">
+                <h2>{{ product.title }}</h2>
+                <p><strong>Description:</strong> {{ product.description }}</p>
+                <p><strong>Price:</strong> {{ product.price }}</p>
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.title }}" width="100">
+                {% else %}
+                No Image Available
+                {% endif %}
+                <!-- Add other product details here -->
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</body>
+</html>

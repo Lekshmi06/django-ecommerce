@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Category Management</title>
+</head>
+<body>
+    <h1>Category Management</h1>
+    
+    <!-- Form to Add Category -->
+    <h2>Add New Category</h2>
+    <form method="Post">
+        {% csrf_token %}
+        <label for="name">Category Name:</label><br>
+        <input type="text" id="name" name="name"><br><br>
+        
+        <input type="submit" value="Add Category">
+    </form>
+
+    <!-- Display Existing Categories -->
+    <h2>Existing Categories</h2>
+    <ul>
+        {% for category in categories %}
+            <li>{{ category.name }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
