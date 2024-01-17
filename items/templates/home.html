@@ -1,25 +1,62 @@
 {%load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="{% static 'css\home.css'%}">
-</head>
-<body>
-  <div class="Nav">
-    <div class="logo">BUYMART</div>
-    <div class="list" >
-        <ul class="ul">
-           <li><a class="a" href="login">login</a></li>
-           <li><a class="a" href="register">register</a></li>
-           <li><a class="a" href="logout">logout</a></li>
-           <li><a class="a" href="categoryadd">categoryadd</a></li>
-           <li><a class="a" href="productadd">productadd</a></li> 
-           <li><a class="a" href="product_view">product_view</a></li> 
-        </ul>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="m-0">
+    <div class="container ">
+        <div class="flex justify-between p-8 items-center text-[#d6d6d6] bg-gradient-to-l from-[#2c2b30] to-[#f58f7c]  w-screen ">
+            <div class="text-3xl text-[#2c2b30] font-cursive font-bold italic">B.</div>
+            
+
+           <div class="flex items-center space-x-5">
+              <ul class="flex items-center space-x-5">
+                 <li><a class="text-[#f58f7c]  hover:text-[#2c2b30]" href="{% url 'home' %}">Home</a></li>
+                 <li><a class="text-[#f58f7c] hover:text-[#2c2b30]" href="{% url 'product_view' %}">Product View</a></li>
+                 {% if user.is_superuser %}
+                    <li><a class="text-[#f58f7c] hover:text-[#2c2b30]" href="{% url 'categoryadd' %}">Add Category</a></li>
+                    <li><a class="text-[#f58f7c] hover:text-[#2c2b30]" href="{% url 'productadd' %}">Add Product</a></li>
+                 {% endif %}
+              </ul>
+              {% if user.is_authenticated %}
+              <a class="text-[#f58f7c] hover:text-[#2c2b30]" href="{% url 'profile' %}">Profile</a>
+                 <a class="text-[#f58f7c] hover:text-[#2c2b30]" href="{% url 'logout' %}">Logout</a>
+              {% else %}
+                 <a class="text-[#f58f7c] hover:text-[#2c2b30]" href="{% url 'login' %}">Login</a>
+                 <a class="text-[#f58f7c] hover:text-[#2c2b30]" href="{% url 'register' %}">Register</a>
+              {% endif %}
+           </div>
+        </div>
+     </div>
+     
+
+      <div class="p-8">
+        {% block content %}
+        <div class="container mx-auto m-3 ">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
+                {% for product in products %}
+                    <a href="{% url 'product_detail' pk=product.pk %}" class="rounded-lg overflow-hidden shadow-lg bg-white hover:shadow-xl transition duration-300">
+                        <div class=" pb-2/3">
+                            <img class=" object-cover " src="{{ product.image.url }}" alt="{{ product.title }}">
+                        </div>
+                        <div class="p-4">
+                            <h2 class="text-xl font-semibold mb-2">{{ product.title }}</h2>
+                            <p class="text-gray-600">{{ product.description }}</p>
+                            <p class="mt-2"><strong>Price:</strong> {{ product.price }}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+        
+        
+        
+        {% endblock %}
+      </div>
     </div>
-</div>
-</body>
+  </body>
 </html>

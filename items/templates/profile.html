@@ -1,30 +1,34 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-100 font-sans">
 
-<h1>User Profile</h1>
+<div class="max-w-2xl mx-auto p-8 bg-white rounded shadow">
+    <h1 class="text-3xl font-semibold mb-6">User Profile</h1>
 
-{% if user.is_authenticated %}
-    <h2>Welcome, {{ user.username }}</h2>
-    {% if user.first_name %}
-        <p>First Name: {{ user.first_name }}</p>
-    {% endif %}
-    {% if user.last_name %}
-        <p>Last Name: {{ user.last_name }}</p>
-    {% endif %}
-    {% if user.email %}
-        <p>Email: {{ user.email }}</p>
-    {% endif %}
-    {% if user.dp %}
-        <img src="{{ user.dp.url }}" alt="User Profile Picture" style="max-width: 200px; max-height: 200px;">
-    {% endif %}
-    <!-- Add other user information here -->
-{% else %}
-    <p>Please log in to view your profile.</p>
-{% endif %}
+  
+    <div class="mb-8">
+        <img src="{{ profiles.profile.url }}" alt="Profile Picture" class="rounded-full h-16 w-16 mb-4">
+        <p class="text-lg font-semibold mb-2">Username: {{ profile.username }}</p>
+        <p class="text-lg mb-2">First Name: {{ profiles.first_name }}</p>
+        <p class="text-lg mb-2">Last Name: {{ profiles.last_name }}</p>
+        <p class="text-lg mb-2">Email: {{ profiles.email }}</p>
+        <!-- Add more fields as needed -->
+    </div>
+    <a class="bg-blue-500 rounded hover:bg-blue-300 p-4" href="{% url 'update_profile' %}">Update</a>
+
+</div>
 
 </body>
 </html>
+
+{% endblock %}

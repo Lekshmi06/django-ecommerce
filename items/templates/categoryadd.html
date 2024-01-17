@@ -1,28 +1,51 @@
+{% extends 'home.html' %}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Category Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Category Management</h1>
-    
-    <!-- Form to Add Category -->
-    <h2>Add New Category</h2>
-    <form method="Post">
-        {% csrf_token %}
-        <label for="name">Category Name:</label><br>
-        <input type="text" id="name" name="name"><br><br>
-        
-        <input type="submit" value="Add Category">
-    </form>
+<body class="bg-gray-100 font-sans">
 
-    <!-- Display Existing Categories -->
-    <h2>Existing Categories</h2>
-    <ul>
-        {% for category in categories %}
-            <li>{{ category.name }}</li>
-        {% endfor %}
-    </ul>
+    <div class="max-w-2xl mx-auto p-8 bg-white rounded shadow">
+        <h1 class="text-3xl font-semibold mb-6">Category Management</h1>
+
+        <!-- Form to Add Category -->
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold mb-3">Add New Category</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <label for="name" class="text-lg font-medium text-gray-700">Category Name:</label>
+                <input type="text" id="name" name="name" class="w-full border p-2 rounded mt-1">
+                
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mt-4 hover:bg-blue-700">Add Category</button>
+            </form>
+        </div>
+
+        <!-- Display Existing Categories -->
+        <div>
+            <h2 class="text-xl font-semibold mb-3">Existing Categories</h2>
+            <ul class="list-disc pl-6">
+                {% for category in categories %}
+                    <li class="text-gray-800">
+                        {{ category.name }}
+                        <!-- Edit Category Button -->
+                        <a href="{% url 'edit_category' category.id %}" class="text-blue-500 ml-2">Edit</a>
+
+                        <!-- Delete Category Form -->
+                        <form method="POST" action="{% url 'delete_category' category.id %}" class="inline">
+                            {% csrf_token %}
+                            <button type="submit" class="text-red-500 ml-2" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
 </body>
 </html>
+{% endblock %}
